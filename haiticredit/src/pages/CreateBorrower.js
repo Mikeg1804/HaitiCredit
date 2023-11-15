@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
-import { CREATE_USER } from '../utils/mutations';
+import { CREATE_BORROWER } from '../utils/mutations'; // Make sure to import the correct mutation
 
-function Signup(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [createUser] = useMutation(CREATE_USER);
+function CreateBorrower() {
+  const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    nif: '',
+    dateofBirth: '',
+    addressStreet: '',
+    addressCity: '',
+    addressDepartment: '',
+    telePhone: '',
+  });
+  const [createBorrower] = useMutation(CREATE_BORROWER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const mutationResponse = await createUser({
+    const mutationResponse = await createBorrower({
       variables: {
         firstName: formState.firstName,
         lastName: formState.lastName,
         email: formState.email,
-        telePhone: formState.telePhone,
-        password: formState.password,
         nif: formState.nif,
-        companyName: formState.companyName,
+        dateofBirth: formState.dateofBirth,
         addressStreet: formState.addressStreet,
         addressCity: formState.addressCity,
         addressDepartment: formState.addressDepartment,
+        telePhone: formState.telePhone,
       },
     });
-    const token = mutationResponse.data.createUser.token;
-    Auth.login(token);
+
+    console.log(mutationResponse);
+
+    // Handle any further logic or redirect as needed after creating the borrower
   };
 
   const handleChange = (event) => {
@@ -38,116 +48,105 @@ function Signup(props) {
 
   return (
     <div className="container my-1">
-      <Link to="/login">← Go to Login</Link>
-
-      <h2>Signup</h2>
+      <Link to="/createborrower">← Go back</Link>
+      <h2>Create New Borrower</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
           <label htmlFor="firstName">First Name:</label>
           <input
-            placeholder="First"
-            name="firstName"
             type="firstName"
             id="firstName"
+            name="firstName"
+            value={formState.firstName}
             onChange={handleChange}
           />
         </div>
         <div className="flex-row space-between my-2">
           <label htmlFor="lastName">Last Name:</label>
           <input
-            placeholder="Last"
-            name="lastName"
             type="lastName"
             id="lastName"
+            name="lastName"
+            value={formState.lastName}
             onChange={handleChange}
           />
         </div>
         <div className="flex-row space-between my-2">
           <label htmlFor="email">Email:</label>
           <input
-            placeholder="youremail@test.com"
-            name="email"
             type="email"
             id="email"
+            name="email"
+            value={formState.email}
             onChange={handleChange}
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
+          <label htmlFor="nif">NIF:</label>
           <input
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="telePhone">Telephone:</label>
-          <input
-            placeholder="509-1233-000"
-            name="telePhone"
-            type="telePhone"
-            id="telePhone"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-        <label htmlFor="nif">NIF:</label>
-          <input
-            placeholder="1233-1233"
-            name="nif"
             type="nif"
             id="nif"
+            name="nif"
+            value={formState.nif}
             onChange={handleChange}
           />
-        </div>
+        </div> 
         <div className="flex-row space-between my-2">
-          <label htmlFor="companyName">CompanyName:</label>
+          <label htmlFor="dateofBirth">Date of Birth:</label>
           <input
-            placeholder="Entreprise.SA"
-            name="companyName"
-            type="companyName"
-            id="companyName"
+            type="date"
+            id="dateofBirth"
+            name="dateofBirth"
+            value={formState.dateofBirth}
             onChange={handleChange}
           />
-        </div>
+        </div> 
         <div className="flex-row space-between my-2">
-          <label htmlFor="addressStreet">AddressStreet:</label>
+          <label htmlFor="addressStreet">Address Street</label>
           <input
-            placeholder="3000 Rue Bienvenue"
-            name="addressStreet"
             type="addressStreet"
             id="addressStreet"
+            name="addressStreet"
+            value={formState.addressStreet}
             onChange={handleChange}
           />
-        </div>
+        </div> 
         <div className="flex-row space-between my-2">
-          <label htmlFor="addressCity">AddressCity:</label>
+          <label htmlFor="addressCity">Address City</label>
           <input
-            placeholder="Les Cayes"
-            name="addressCity"
             type="addressCity"
             id="addressCity"
+            name="addressCity"
+            value={formState.addressCity}
             onChange={handleChange}
           />
-        </div>
+        </div> 
         <div className="flex-row space-between my-2">
-          <label htmlFor="addressDepartment">AddressDepartment:</label>
+          <label htmlFor="addressDepartment">Address Department</label>
           <input
-            placeholder="Sud"
-            name="addressDepartment"
             type="addressDepartment"
             id="addressDepartment"
+            name="addressDepartment"
+            value={formState.addressDepartment}
+            onChange={handleChange}
+          />
+        </div> 
+        <div className="flex-row space-between my-2">
+          <label htmlFor="telePhone">TelePhone</label>
+          <input
+            type="telePhone"
+            id="atelePhone"
+            name="telePhone"
+            value={formState.telePhone}
             onChange={handleChange}
           />
         </div>
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+          <button type="submit">Create Borrower</button>
         </div>
       </form>
     </div>
   );
 }
 
-export default Signup;
+export default CreateBorrower;

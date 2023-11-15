@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
+const Order = require('./Order');
 
 const userSchema = new Schema({
   firstName: {
@@ -27,9 +28,10 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  NIF: {
+  nif: {
     type: String, // Use String for NIF if it may contain letters
     required: true,
+    trim: true,
   },
   companyName: {
     type: String,
@@ -47,6 +49,7 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  orders: [Order.schema]
 });
 
 // Set up pre-save middleware to create password hash

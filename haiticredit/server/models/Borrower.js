@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+
 const borrowerSchema = new Schema({
   firstName: {
     type: String,
@@ -14,10 +15,10 @@ const borrowerSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: false, // Ensure each borrower has a unique email
   },
-  NIF: {
+  nif: {
     type: String, // Assuming NIF might include letters and numbers
     required: true,
   },

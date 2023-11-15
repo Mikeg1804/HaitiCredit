@@ -36,7 +36,7 @@ const loanSchema = new Schema({
   },
   finalPaymentAmount: {
     type: Number,
-    required: true,
+    required: false,
   },
   dateOfIssuance: {
     type: Date,

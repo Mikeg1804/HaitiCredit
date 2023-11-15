@@ -15,6 +15,7 @@ const resolvers = {
         getBorrowerLoans: async (parent, { borrowerId }) => {
             return await Loan.find({ borrower: borrowerId }).populate('lender');
           },
+        
         getBorrowersWithLoans: async () => {
         return await Borrower.find().populate({
         path: 'loans',
@@ -24,7 +25,7 @@ const resolvers = {
         },
             });
         },
-
+      
         getBorrower: async (parent, { borrowerNIF }) => {
             return await Borrower.find(borrowerNIF).populate({
               path: 'loans',
@@ -103,6 +104,7 @@ Mutation: {
     createUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
+      
       return { token, user };
     },
     updateUser: async (parent, args, context) => {
@@ -123,10 +125,28 @@ Mutation: {
 
       throw new AuthenticationError('Not logged in');
     },
-    createBorrower: async (parent, { input }) => {
-      const newBorrower = new Borrower(input);
+    // createBorrower: async (parent, { input }) => {
+    //   const newBorrower = new Borrower(input);
+    //   return await newBorrower.save();
+    // },
+
+    createBorrower: async (parent, firstName, lastName, email, nif, dateOfBirth, addressStreet, addressCity, addressDepartment, telePhone) => {
+      const newBorrower = new Borrower({
+        firstName,
+        lastName,
+        email,
+        nif,
+        dateOfBirth,
+        addressStreet,
+        addressCity,
+        addressDepartment,
+        telePhone
+      });
+      console.log(newBorrower);
       return await newBorrower.save();
+
     },
+    
     updateBorrower: async (parent, { borrowerId, input }) => {
       try {
         // Use findByIdAndUpdate to find the borrower by their ID and update their fields

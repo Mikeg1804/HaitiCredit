@@ -10,7 +10,7 @@ const typeDefs = gql`
     firstName: String
     lastName: String
     email: String
-    NIF: String
+    nif: String
     dateofBirth: Date
     addressStreet: String
     addressCity: String
@@ -43,11 +43,12 @@ const typeDefs = gql`
     lastName: String
     email: String
     telePhone: String
-    NIF: String
+    nif: String
     companyName: String
     addressStreet: String
     addressCity: String
     addressDepartment: String
+    orders: [Order]
   }
   
   type Order {
@@ -77,12 +78,12 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createUser (firstName: String!, lastName: String!, email: String!, telePhone: String!, password: String!, NIF: String!, companyName: String!, addressStreet: String!, addressCity: String!, addressDepartment:String!): Auth
-    createBorrower (firstName: String!, lastName: String!, email: String!, NIF: String!, dateofBirth: String!, addressStreet: String!, addressCity: String!, addressDepartment:String!, telePhone: String!): Borrower
+    createUser (firstName: String!, lastName: String!, email: String!, telePhone: String!, password: String!, nif: String!, companyName: String!, addressStreet: String!, addressCity: String!, addressDepartment:String!): Auth
+    createBorrower (firstName: String!, lastName: String!, email: String!, nif: String!, dateofBirth: Date!, addressStreet: String!, addressCity: String!, addressDepartment:String!, telePhone: String!): Borrower
     createLoan (loanName: String!, loanAmount: Number!, interestRate: Number!,loanAmortizationAmount: Number!, termOfLoan: Number!, finalPaymentAmount: Number!, dateOfIssuance: Date!, dateOfMaturity: Date!, numberOfOnTimePayments: Number!, dateOfMissedPayment: Date!, dateOfPaymentRemedied: Date!, supportingDocumentation: String!): LoanResponse
     addOrder(borrowers: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, telePhone: String, password: String, NIF: String, companyName: String, addressStreet: String, addressCity: String, addressDepartment:String): User
-    updateBorrower(firstName: String, lastName: String, email: String, NIF: String, dateofBirth: String, addressStreet: String, addressCity: String, addressDepartment:String, telePhone: String): Borrower
+    updateUser(firstName: String, lastName: String, email: String, telePhone: String, password: String, nif: String!, companyName: String, addressStreet: String, addressCity: String, addressDepartment:String): User
+    updateBorrower(firstName: String, lastName: String, email: String, nif: String, dateofBirth: Date, addressStreet: String, addressCity: String, addressDepartment:String, telePhone: String): Borrower
     updateLoan (loanName: String, loanAmount: Number, interestRate: Number, loanAmortizationAmount: Number, termOfLoan: Number, finalPaymentAmount: Number, dateOfIssuance: Date, dateOfMaturity: Date, numberOfOnTimePayments: Number!, dateOfMissedPayment: Date, dateOfPaymentRemedied: Date, supportingDocumentation: String): LoanResponse
     updateOrder(_id: ID!, quantity: Int!): Order
     deleteUser(_id: ID!): User

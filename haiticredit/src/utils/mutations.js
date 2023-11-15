@@ -33,7 +33,7 @@ export const CREATE_USER = gql`
     $email: String!
     $telePhone: String!
     $password: String!
-    $NIF: String!
+    $nif: String!
     $companyName: String!
     $addressStreet: String!
     $addressCity: String!
@@ -45,7 +45,7 @@ export const CREATE_USER = gql`
       email: $email
       telePhone: $telePhone
       password: $password
-      NIF: $NIF
+      nif: $nif
       companyName: $companyName
       addressStreet: $addressStreet
       addressCity: $addressCity
@@ -54,9 +54,6 @@ export const CREATE_USER = gql`
       token
       user {
         _id
-        firstName
-        lastName
-        email
       }
     }
   }
@@ -67,8 +64,8 @@ export const CREATE_BORROWER = gql`
     $firstName: String!
     $lastName: String!
     $email: String!
-    $NIF: String!
-    $dateofBirth: String!
+    $nif: String!
+    $dateofBirth: Date!
     $addressStreet: String!
     $addressCity: String!
     $addressDepartment: String!
@@ -78,7 +75,7 @@ export const CREATE_BORROWER = gql`
       firstName: $firstName
       lastName: $lastName
       email: $email
-      NIF: $NIF
+      nif: $nif
       dateofBirth: $dateofBirth
       addressStreet: $addressStreet
       addressCity: $addressCity
@@ -93,72 +90,8 @@ export const CREATE_BORROWER = gql`
   }
 `;
 
-export const UPDATE_USER = gql`
-  mutation updateUser(
-    $firstName: String
-    $lastName: String
-    $email: String
-    $telePhone: String
-    $password: String
-    $NIF: String
-    $companyName: String
-    $addressStreet: String
-    $addressCity: String
-    $addressDepartment: String
-  ) {
-    updateUser(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      telePhone: $telePhone
-      password: $password
-      NIF: $NIF
-      companyName: $companyName
-      addressStreet: $addressStreet
-      addressCity: $addressCity
-      addressDepartment: $addressDepartment
-    ) {
-      _id
-      firstName
-      lastName
-      email
-    }
-  }
-`;
-
-export const UPDATE_BORROWER = gql`
-  mutation updateBorrower(
-    $firstName: String
-    $lastName: String
-    $email: String
-    $NIF: String
-    $dateofBirth: String
-    $addressStreet: String
-    $addressCity: String
-    $addressDepartment: String
-    $telePhone: String
-  ) {
-    updateBorrower(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      NIF: $NIF
-      dateofBirth: $dateofBirth
-      addressStreet: $addressStreet
-      addressCity: $addressCity
-      addressDepartment: $addressDepartment
-      telePhone: $telePhone
-    ) {
-      _id
-      firstName
-      lastName
-      email
-    }
-  }
-`;
-
-export const UPDATE_LOAN = gql`
-  mutation updateLoan(
+export const CREATE_LOAN = gql`
+  mutation createLoan(
     $loanId: ID!
     $loanName: String
     $loanAmount: Number
@@ -173,7 +106,7 @@ export const UPDATE_LOAN = gql`
     $dateOfPaymentRemedied: Date
     $supportingDocumentation: String
   ) {
-    updateLoan(
+    createLoan(
       loanId: $loanId
       loanName: $loanName
       loanAmount: $loanAmount
@@ -195,48 +128,150 @@ export const UPDATE_LOAN = gql`
   }
 `;
 
-export const UPDATE_ORDER = gql`
-  mutation updateOrder(
-    $_id: ID!
-    $quantity: Int!
-  ) {
-    updateOrder(
-      _id: $_id
-      quantity: $quantity
-    ) {
-      _id
-      purchaseDate
-    }
-  }
-`;
+// export const UPDATE_USER = gql`
+//   mutation updateUser(
+//     $firstName: String
+//     $lastName: String
+//     $email: String
+//     $telePhone: String
+//     $password: String
+//     $NIF: String
+//     $companyName: String
+//     $addressStreet: String
+//     $addressCity: String
+//     $addressDepartment: String
+//   ) {
+//     updateUser(
+//       firstName: $firstName
+//       lastName: $lastName
+//       email: $email
+//       telePhone: $telePhone
+//       password: $password
+//       NIF: $NIF
+//       companyName: $companyName
+//       addressStreet: $addressStreet
+//       addressCity: $addressCity
+//       addressDepartment: $addressDepartment
+//     ) {
+//       _id
+//       firstName
+//       lastName
+//       email
+//     }
+//   }
+// `;
 
-export const DELETE_USER = gql`
-  mutation deleteUser($_id: ID!) {
-    deleteUser(_id: $_id) {
-      _id
-    }
-  }
-`;
+// export const UPDATE_BORROWER = gql`
+//   mutation updateBorrower(
+//     $firstName: String
+//     $lastName: String
+//     $email: String
+//     $NIF: String
+//     $dateofBirth: String
+//     $addressStreet: String
+//     $addressCity: String
+//     $addressDepartment: String
+//     $telePhone: String
+//   ) {
+//     updateBorrower(
+//       firstName: $firstName
+//       lastName: $lastName
+//       email: $email
+//       NIF: $NIF
+//       dateofBirth: $dateofBirth
+//       addressStreet: $addressStreet
+//       addressCity: $addressCity
+//       addressDepartment: $addressDepartment
+//       telePhone: $telePhone
+//     ) {
+//       _id
+//       firstName
+//       lastName
+//       email
+//     }
+//   }
+// `;
 
-export const DELETE_BORROWER = gql`
-  mutation deleteBorrower($_id: ID!) {
-    deleteBorrower(_id: $_id) {
-      _id
-    }
-  }
-`;
-export const DELETE_LOAN = gql`
-  mutation deleteLoan($loanId: ID!) {
-    deleteLoan(loanId: $loanId) {
-      _id
-    }
-  }
-`;
+// export const UPDATE_LOAN = gql`
+//   mutation updateLoan(
+//     $loanId: ID!
+//     $loanName: String
+//     $loanAmount: Number
+//     $interestRate: Number
+//     $loanAmortizationAmount: Number
+//     $termOfLoan: Number
+//     $finalPaymentAmount: Number
+//     $dateOfIssuance: Date
+//     $dateOfMaturity: Date
+//     $numberOfOnTimePayments: Number
+//     $dateOfMissedPayment: Date
+//     $dateOfPaymentRemedied: Date
+//     $supportingDocumentation: String
+//   ) {
+//     updateLoan(
+//       loanId: $loanId
+//       loanName: $loanName
+//       loanAmount: $loanAmount
+//       interestRate: $interestRate
+//       loanAmortizationAmount: $loanAmortizationAmount
+//       termOfLoan: $termOfLoan
+//       finalPaymentAmount: $finalPaymentAmount
+//       dateOfIssuance: $dateOfIssuance
+//       dateOfMaturity: $dateOfMaturity
+//       numberOfOnTimePayments: $numberOfOnTimePayments
+//       dateOfMissedPayment: $dateOfMissedPayment
+//       dateOfPaymentRemedied: $dateOfPaymentRemedied
+//       supportingDocumentation: $supportingDocumentation
+//     ) {
+//       _id
+//       loanName
+//       loanAmount
+//     }
+//   }
+// `;
 
-export const DELETE_ORDER = gql`
-  mutation deleteOrder($_id: ID!) {
-    deleteOrder(_id: $_id) {
-      _id
-    }
-  }
-  `; 
+// export const UPDATE_ORDER = gql`
+//   mutation updateOrder(
+//     $_id: ID!
+//     $quantity: Int!
+//   ) {
+//     updateOrder(
+//       _id: $_id
+//       quantity: $quantity
+//     ) {
+//       _id
+//       purchaseDate
+//     }
+//   }
+// `;
+
+// export const DELETE_USER = gql`
+//   mutation deleteUser($_id: ID!) {
+//     deleteUser(_id: $_id) {
+//       _id
+//     }
+//   }
+// `;
+
+// export const DELETE_BORROWER = gql`
+//   mutation deleteBorrower($_id: ID!) {
+//     deleteBorrower(_id: $_id) {
+//       _id
+//     }
+//   }
+// `;
+// export const DELETE_LOAN = gql`
+//   mutation deleteLoan($loanId: ID!) {
+//     deleteLoan(loanId: $loanId) {
+//       _id
+//     }
+//   }
+// `;
+
+// export const DELETE_ORDER = gql`
+//   mutation deleteOrder($_id: ID!) {
+//     deleteOrder(_id: $_id) {
+//       _id
+//     }
+//   }
+//   `; 
