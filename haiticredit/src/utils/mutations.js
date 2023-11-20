@@ -92,22 +92,22 @@ export const CREATE_BORROWER = gql`
 
 export const CREATE_LOAN = gql`
   mutation createLoan(
-    $loanId: ID!
     $loanName: String
     $loanAmount: Number
     $interestRate: Number
     $loanAmortizationAmount: Number
-    $termOfLoan: Number
+    $termOfLoan: Int
     $finalPaymentAmount: Number
     $dateOfIssuance: Date
     $dateOfMaturity: Date
-    $numberOfOnTimePayments: Number
+    $numberOfOnTimePayments: Int
     $dateOfMissedPayment: Date
     $dateOfPaymentRemedied: Date
     $supportingDocumentation: String
+    $borrowerId: ID!  
+    $userId: ID!  
   ) {
     createLoan(
-      loanId: $loanId
       loanName: $loanName
       loanAmount: $loanAmount
       interestRate: $interestRate
@@ -120,13 +120,78 @@ export const CREATE_LOAN = gql`
       dateOfMissedPayment: $dateOfMissedPayment
       dateOfPaymentRemedied: $dateOfPaymentRemedied
       supportingDocumentation: $supportingDocumentation
+      borrowerId: $borrowerId  # Include the borrowerId in the mutation
+      userId: $userId  # Include the userId in the mutation
     ) {
       _id
       loanName
       loanAmount
+      borrower {
+        _id
+      }
+      user {
+        _id
+      }
     }
   }
 `;
+
+
+
+// import gql from 'graphql-tag';
+
+// export const CREATE_LOAN = gql`
+//   mutation createLoan(
+//     $loanId: ID!
+//     $loanName: String
+//     $loanAmount: Float
+//     $interestRate: Float
+//     $loanAmortizationAmount: Float
+//     $termOfLoan: Int
+//     $finalPaymentAmount: Float
+//     $dateOfIssuance: Date
+//     $dateOfMaturity: Date
+//     $numberOfOnTimePayments: Int
+//     $dateOfMissedPayment: Date
+//     $dateOfPaymentRemedied: Date
+//     $supportingDocumentation: String
+//     $borrowerNIF: String!  # Assuming you have a NIF for the borrower
+//     $userNIF: String!  # Assuming you have a NIF for the user
+//   ) {
+//     createLoan(
+//       loanId: $loanId
+//       loanName: $loanName
+//       loanAmount: $loanAmount
+//       interestRate: $interestRate
+//       loanAmortizationAmount: $loanAmortizationAmount
+//       termOfLoan: $termOfLoan
+//       finalPaymentAmount: $finalPaymentAmount
+//       dateOfIssuance: $dateOfIssuance
+//       dateOfMaturity: $dateOfMaturity
+//       numberOfOnTimePayments: $numberOfOnTimePayments
+//       dateOfMissedPayment: $dateOfMissedPayment
+//       dateOfPaymentRemedied: $dateOfPaymentRemedied
+//       supportingDocumentation: $supportingDocumentation
+//       borrowerNIF: $borrowerNIF  # Include the borrower's NIF in the mutation
+//       userNIF: $userNIF  # Include the user's NIF in the mutation
+//     ) {
+//       _id
+//       loanName
+//       loanAmount
+//       borrower {
+//         _id
+//         // other borrower fields
+//       }
+//       user {
+//         _id
+//         // other user fields
+//       }
+//     }
+//   }
+// `;
+
+
+
 
 // export const UPDATE_USER = gql`
 //   mutation updateUser(

@@ -21,6 +21,8 @@ const borrowerSchema = new Schema({
   nif: {
     type: String, // Assuming NIF might include letters and numbers
     required: true,
+    unique: true, // Ensure each
+    PrimaryKey: true,
   },
   dateofBirth: {
     type: Date,

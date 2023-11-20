@@ -12,29 +12,34 @@ const resolvers = {
             return await Loan.find();
           },
 
-        getBorrowerLoans: async (parent, { borrowerId }) => {
-            return await Loan.find({ borrower: borrowerId }).populate('lender');
-          },
+        // getBorrowerLoans: async (parent, { borrowerId }) => {
+        //     return await Loan.find({ borrower: borrowerId }).populate('lender');
+        //   },
         
-        getBorrowersWithLoans: async () => {
-        return await Borrower.find().populate({
-        path: 'loans',
-        populate: {
-          path: 'lender',
-          model: 'User',
+        // getBorrowersWithLoans: async () => {
+        // return await Borrower.find().populate({
+        // path: 'loans',
+        // populate: {
+        //   path: 'lender',
+        //   model: 'User',
+        // },
+        //     });
+        // },
+
+        getBorrower: async (parent, { borrowernif }) => {
+          return await BorrowerModel.findOne({ nif: borrowernif });
         },
-            });
-        },
+        
       
-        getBorrower: async (parent, { borrowerNIF }) => {
-            return await Borrower.find(borrowerNIF).populate({
-              path: 'loans',
-              populate: {
-                path: 'lender',
-                model: 'User',
-              },
-            });
-          },
+        // getBorrower: async (parent, { borrowerNIF }) => {
+        //     return await Borrower.find(borrowerNIF).populate({
+        //       path: 'loans',
+        //       populate: {
+        //         path: 'lender',
+        //         model: 'User',
+        //       },
+        //     });
+        //   },
 
         user: async (parent, args, context) => {
         if (context.user) {
@@ -130,24 +135,19 @@ Mutation: {
     //   return await newBorrower.save();
     // },
 
-    createBorrower: async (parent, firstName, lastName, email, nif, dateOfBirth, addressStreet, addressCity, addressDepartment, telePhone) => {
-      const newBorrower = new Borrower({
-        firstName,
-        lastName,
-        email,
-        nif,
-        dateOfBirth,
-        addressStreet,
-        addressCity,
-        addressDepartment,
-        telePhone
-      });
-      console.log(newBorrower);
-      return await newBorrower.save();
-
-    },
+    createBorrower: async (parent, args) => {
     
-    updateBorrower: async (parent, { borrowerId, input }) => {
+      const borrower = await Borrower.create(args);
+      return borrower;
+
+  },
+
+  createLoan: async (parent, args) => {
+    const loan = new Loan.create(args);
+    return loan;
+  },  
+
+  updateBorrower: async (parent, { borrowerId, input }) => {
       try {
         // Use findByIdAndUpdate to find the borrower by their ID and update their fields
         const updatedBorrower = await Borrower.findByIdAndUpdate(
@@ -181,10 +181,7 @@ Mutation: {
         throw new Error('Could not delete the borrower');
       }
     },
-    createLoan: async (parent, { input }) => {
-      const newLoan = new Loan(input);
-      return await newLoan.save();
-    },
+
     updateLoan: async (parent, { loanId, input }) => {
       try {
         // Use findByIdAndUpdate to find the loan by its ID and update it

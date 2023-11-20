@@ -71,7 +71,7 @@ const typeDefs = gql`
     borrower: [Borrower]
     getBorrowerLoans(borrowerId: ID!): [Loan]
     getBorrowersWithLoans: [Borrower]
-    getBorrower(borrowerNIF: String!): Borrower
+    getBorrower(borrowernif: String!): Borrower
     user: User
     order(_id: ID!): Order
     checkout(products: [ID]!): Checkout

@@ -32,9 +32,12 @@ export const GET_BORROWERS = gql`
       firstName
       lastName
       email
-      NIF
+      nif
       dateofBirth
+      addressStreet
+      addressCity
       telePhone
+      addressDepartment
     }
   }
 `;
@@ -75,13 +78,13 @@ export const GET_BORROWERS_WITH_LOANS = gql`
 
 // Query to get a specific borrower by NIF
 export const GET_BORROWER_BY_NIF = gql`
-  query GetBorrowerByNIF($borrowerNIF: String!) {
-    getBorrower(borrowerNIF: $borrowerNIF) {
+  query GetBorrowerByNIF($borrowernif: String!) {
+    getBorrower(borrowernif: $borrowernif) {
       _id
       firstName
       lastName
       email
-      NIF
+      nif
       dateofBirth
       telePhone
       loans {
@@ -142,6 +145,8 @@ export const GET_ORDER_BY_ID = gql`
     }
   }
 `;
+
+
 
 // Query to get a checkout session for placing an order
 export const GET_CHECKOUT_SESSION = gql`
