@@ -1,14 +1,14 @@
-  import React, { useState, useEffect, useContext } from 'react';
+  import React, { useState } from 'react';
   import { Link } from 'react-router-dom';
-  import { useMutation, useQuery } from '@apollo/client';
+  import { useMutation } from '@apollo/client';
   import { CREATE_LOAN } from '../utils/mutations';
-  import { GET_BORROWER_BY_NIF } from '../utils/queries';
+  // import { GET_BORROWER_BY_NIF } from '../utils/queries';
   // import { useApolloUploadClient } from 'apollo-upload-client';
-  import { useUserContext, } from '../utils/userContext';
+  // import { useUserContext, } from '../utils/userContext';
 
 
   function CreateLoan() {
-    const { currentUserNIF, setUser } = useUserContext();
+    // const { currentUserNIF, setUser } = useUserContext();
 
     const [formState, setFormState] = useState({
       loanName: '',
@@ -23,21 +23,23 @@
       dateOfMissedPayment: '',
       dateOfPaymentRemedied: '',
       supportingDocumentation: '',
-      borrowerNIF: '', 
+      borrowernif: '', 
+      usernif: '',
     });
 
-    const [borrower, setBorrower] = useState(null);
+    // const [borrower, setBorrower] = useState(null);
 
-    const { loading, error, data } = useQuery(GET_BORROWER_BY_NIF, {
-      variables: { borrowerNIF: formState.borrowerNIF },
-      skip: !formState.borrowerNIF,
-    });
+    // const { loading, error, data } = useQuery(GET_BORROWER_BY_NIF, {
+    //   variables: { borrowerNIF: formState.borrowerNIF },
+    //   skip: !formState.borrowerNIF,
+    // });
   
-    useEffect(() => {
-      if (data && data.getBorrowerByNIF) {
-        setBorrower(data.getBorrowerByNIF);
-      }
-    }, [data]);
+    // useEffect(() => {
+    //   console.log(data);
+    //   if (data && data.getBorrowerByNIF) {
+    //     setBorrower(data.getBorrowerByNIF);
+    //   }
+    // }, [data]);
 
     const [createLoan] = useMutation(CREATE_LOAN);
 
@@ -60,8 +62,8 @@
           dateOfMissedPayment: formState.dateOfMissedPayment,
           dateOfPaymentRemedied: formState.dateOfPaymentRemedied,
           supportingDocumentation: formState.supportingDocumentation,
-          borrowerId: borrower ? borrower._id : null,
-          userNIF: currentUserNIF,
+          borrowernif: formState.borrowernif,
+          usernif: formState.usernif,
           
         },
       });
@@ -81,7 +83,8 @@
     const [file, setFile] = useState(null);
 
     const handleFileChange = (event) => {
-      const selectedFile = event.target.files[0];
+      const selectedFile = event.target.file[0];
+      // const selectedFile = event.target.files[0];
       setFile(selectedFile);
     };
     
@@ -94,7 +97,7 @@
           <div className="flex-row space-between my-2">
             <label htmlFor="loanName">Loan Name:</label>
             <input
-              type="text"
+              type="loanName"
               id="loanName"
               name="loanName"
               value={formState.loanName}
@@ -110,7 +113,7 @@
             />
             <label htmlFor="interestRate">Interest Rate:</label>
             <input
-              type="number"
+              type="interestRate"
               id="interestRate"
               name="interestRate"
               value={formState.interestRate}
@@ -118,7 +121,7 @@
             />  
             <label htmlFor="loanAmortizationAmount">Loan Amortization Amount:</label>
             <input
-              type="number"
+              type="loanAmortizationAmount"
               id="loanAmortizationAmount"
               name="loanAmortizationAmount"
               value={formState.loanAmortizationAmount}
@@ -126,7 +129,7 @@
             />   
             <label htmlFor="termOfLoan">Term of Loan:</label>
             <input
-              type="number"
+              type="termOfLoan"
               id="termOfLoan"
               name="termOfLoan"
               value={formState.termOfLoan}
@@ -135,7 +138,7 @@
      
             <label htmlFor="finalPaymentAmount">FinalPayment Amount:</label>
             <input
-              type="number"
+              type="finalPaymentAmount"
               id="finalPaymentAmount"
               name="finalPaymentAmount"
               value={formState.finalPaymentAmount}
@@ -189,14 +192,23 @@
               onChange={handleFileChange}
             />                                                             
           </div>
-
           <div className="flex-row space-between my-2">
-          <label htmlFor="borrowerNIF">Borrower NIF:</label>
+          <label htmlFor="usernif">Lender NIF:</label>
           <input
-            type="text"
-            id="borrowerNIF"
-            name="borrowerNIF"
-            value={formState.borrowerNIF}
+            type="usernif"
+            id="usernif"
+            name="usernif"
+            value={formState.usernif}
+            onChange={handleChange}
+          />
+        </div>
+          <div className="flex-row space-between my-2">
+          <label htmlFor="borrowernif">Borrower NIF:</label>
+          <input
+            type="borrowernif"
+            id="borrowernif"
+            name="borrowernif"
+            value={formState.borrowernif}
             onChange={handleChange}
           />
         </div>

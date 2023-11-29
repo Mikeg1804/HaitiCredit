@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { CREATE_BORROWER } from '../utils/mutations'; // Make sure to import the correct mutation
+import { CREATE_BORROWER } from '../utils/mutations'; 
 
 function CreateBorrower() {
   const [formState, setFormState] = useState({

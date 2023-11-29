@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
 
 const borrowerSchema = new Schema({
   firstName: {
@@ -46,12 +45,12 @@ const borrowerSchema = new Schema({
   loans: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Loan',
+      ref: "Loan",
     },
   ],
 });
 
 // Create a model using the schema
-const BorrowerModel = mongoose.model('Borrower', borrowerSchema);
+const Borrower = mongoose.model("Borrower", borrowerSchema);
 
-module.exports = BorrowerModel;
+module.exports = Borrower;

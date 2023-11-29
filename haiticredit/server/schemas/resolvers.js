@@ -4,13 +4,32 @@ const { AuthenticationError, UserInputError } = require('apollo-server-express')
 const { User, Loan, Borrower, Order } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+// error was caused after I added the below line of code, so I need to check it.
+// const { Types } = mongoose;
 
+const isValidObjectId = id => Types.ObjectId.isValid(id);
 
 const resolvers = {
     Query: {
-        loan: async () => {
-            return await Loan.find();
-          },
+
+        getLoans: async (parent, { borrowernif }) => {
+          try {
+            // Check if borrowernif is a valid ObjectId (assuming it's a MongoDB ObjectId)
+            if (isValidObjectId(borrowernif)) {
+              // If it's a valid ObjectId, use it to find by _id
+              const loan = await Loan.findById(borrowernif);
+              return loan ? [loan] : [];
+            } else {
+              // If it's not a valid ObjectId, assume it's a string and find by borrowernif
+              const loans = await Loan.find({ borrowernif });
+              return loans;
+            }
+          } catch (error) {
+            console.error('Error fetching loans:', error);
+            throw error;
+          }
+        },
+      
 
         // getBorrowerLoans: async (parent, { borrowerId }) => {
         //     return await Loan.find({ borrower: borrowerId }).populate('lender');
@@ -27,7 +46,7 @@ const resolvers = {
         // },
 
         getBorrower: async (parent, { borrowernif }) => {
-          return await BorrowerModel.findOne({ nif: borrowernif });
+          return await Borrower.findOne({ nif: borrowernif });
         },
         
       
@@ -143,7 +162,7 @@ Mutation: {
   },
 
   createLoan: async (parent, args) => {
-    const loan = new Loan.create(args);
+    const loan = await Loan.create(args);
     return loan;
   },  
 

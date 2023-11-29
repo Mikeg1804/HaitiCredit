@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { GET_BORROWER_BY_NIF } from '../utils/queries'; // Make sure to import the correct query
+import { GET_BORROWER_BY_NIF } from '../utils/queries'; 
 
 function GetBorrower() {
   const [nif, setNIF] = useState('');

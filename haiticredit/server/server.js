@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Serve up static assets
-app.use('/images', express.static(path.join(__dirname, '../client/images')));
+// app.use('/images', express.static(path.join(__dirname, '../client/images')));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../build')));
@@ -27,6 +27,18 @@ if (process.env.NODE_ENV === 'production') {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
+
+// added this below to try to get the /graphql endpoint to work
+
+app.get('/manifest.json', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/manifest.json'));
+});
+
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/favicon.ico'));
+});
+
+// added this above to try to get the /graphql endpoint to work
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
@@ -40,7 +52,10 @@ const startApolloServer = async () => {
     })
   })
  };
-  
+ 
+ app.on('error', (err) => {
+  console.error('Server error:', err);
+});
   // Call the async function to start the server
   startApolloServer();
 

@@ -21,6 +21,7 @@ import Success from './pages/Success';
 import CreateLoan from './pages/CreateLoan';
 import CreateBorrower from './pages/CreateBorrower';
 import BorrowersList from './pages/GetBorrower';
+import GetLoan from './pages/GetLoan';
 // import OrderHistory from './pages/OrderHistory';
 
 const httpLink = createHttpLink({
@@ -77,6 +78,10 @@ function App() {
               <Route
                 path="/borrowerslist" 
                 element={<BorrowersList/>} 
+                />
+               <Route
+                path="/getloanbyname" 
+                element={<GetLoan/>} 
                 />
               {/* <Route 
                 path="/orderHistory" 

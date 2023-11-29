@@ -18,7 +18,10 @@ function Nav() {
           </li>
           <li className="mx-1">
             <Link to="/borrowerslist">Find Borrower</Link>
-          </li>      
+          </li>
+          <li className="mx-1">
+            <Link to="/getloanbyname">Get Loan by Name</Link>
+          </li>       
           <li className="mx-1">
             {/* this is not using the Link component to logout or user and then refresh the application to the start */}
             <a href="/" onClick={() => Auth.logout()}>

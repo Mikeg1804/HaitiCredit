@@ -1,18 +1,17 @@
 import { gql } from '@apollo/client';
 
-// Query to get a list of all loans
 export const GET_LOANS = gql`
-  query GetLoans {
-    loan {
+  query getLoans($borrowernif: String!) {
+    getLoans ( borrowernif: $borrowernif) {
       _id
       loanName
-      borrower {
-        _id
+      borrowernif {
+        nif
         firstName
         lastName
       }
-      lender {
-        _id
+      usernif {
+        nif
         firstName
         lastName
       }
@@ -90,7 +89,7 @@ export const GET_BORROWER_BY_NIF = gql`
       loans {
         _id
         loanName
-        lender {
+        user {
           _id
           firstName
           lastName

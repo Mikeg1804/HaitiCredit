@@ -92,20 +92,20 @@ export const CREATE_BORROWER = gql`
 
 export const CREATE_LOAN = gql`
   mutation createLoan(
-    $loanName: String
-    $loanAmount: Number
-    $interestRate: Number
-    $loanAmortizationAmount: Number
-    $termOfLoan: Int
-    $finalPaymentAmount: Number
-    $dateOfIssuance: Date
-    $dateOfMaturity: Date
-    $numberOfOnTimePayments: Int
-    $dateOfMissedPayment: Date
-    $dateOfPaymentRemedied: Date
-    $supportingDocumentation: String
-    $borrowerId: ID!  
-    $userId: ID!  
+    $loanName: String!
+    $loanAmount: Number!
+    $interestRate: Number!
+    $loanAmortizationAmount: Number!
+    $termOfLoan: Number!
+    $finalPaymentAmount: Number!
+    $dateOfIssuance: Date!
+    $dateOfMaturity: Date!
+    $numberOfOnTimePayments: Number!
+    $dateOfMissedPayment: Date!
+    $dateOfPaymentRemedied: Date!
+    $supportingDocumentation: String!
+    $borrowernif: String! 
+    $usernif: String!  
   ) {
     createLoan(
       loanName: $loanName
@@ -120,20 +120,24 @@ export const CREATE_LOAN = gql`
       dateOfMissedPayment: $dateOfMissedPayment
       dateOfPaymentRemedied: $dateOfPaymentRemedied
       supportingDocumentation: $supportingDocumentation
-      borrowerId: $borrowerId  # Include the borrowerId in the mutation
-      userId: $userId  # Include the userId in the mutation
+      borrowernif: $borrowernif 
+      usernif: $usernif 
     ) {
       _id
       loanName
       loanAmount
-      borrower {
+      borrowernif {
         _id
+        nif
+        firstName
+        lastName
       }
-      user {
+      usernif {
         _id
+        nif
       }
     }
-  }
+  }  
 `;
 
 

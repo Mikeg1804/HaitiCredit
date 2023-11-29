@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
@@ -7,16 +8,21 @@ const loanSchema = new Schema({
     required: true,
     trim: true,
   },
-  borrower: {
-    type: Schema.Types.ObjectId,
-    ref: 'Borrower',
+  borrowernif: {
+    type: String,
     required: true,
+    trim: true,
+    lowercase: true, // Ensure NIF is stored in lowercase
+    ref: 'Borrower.nif', // Reference to the nif field in the Borrower model
   },
-  lender: {
-    type: Schema.Types.ObjectId,
-    ref: 'User', 
+  usernif: {
+    type: String,
     required: true,
+    trim: true,
+    lowercase: true, // Ensure NIF is stored in lowercase
+    ref: 'User.nif', // Reference to the nif field in the User model
   },
+  
   loanAmount: {
     type: Number,
     required: true,
@@ -53,20 +59,97 @@ const loanSchema = new Schema({
   dateOfMissedPayment: {
     type: Date,
     required: false,
-    default: null, 
+    default: null,
   },
   dateOfPaymentRemedied: {
     type: Date,
     required: false,
-    default: null, 
+    default: null,
   },
   supportingDocumentation: {
-    type: String, 
+    type: String,
     required: false,
   },
 });
 
 // Create a model using the schema
-const LoanModel = mongoose.model('Loan', loanSchema);
+const Loan = mongoose.model('Loan', loanSchema);
 
-module.exports = LoanModel;
+module.exports = Loan;
+
+
+
+
+
+// const mongoose = require('mongoose');
+// const { Schema } = mongoose;
+
+// const loanSchema = new Schema({
+//   loanName: {
+//     type: String,
+//     required: true,
+//     trim: true,
+//   },
+//   borrower: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'Borrower',
+//     required: true,
+//   },
+//   lender: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'User', 
+//     required: true,
+//   },
+//   loanAmount: {
+//     type: Number,
+//     required: true,
+//   },
+//   interestRate: {
+//     type: Number,
+//     required: true,
+//   },
+//   loanAmortizationAmount: {
+//     type: Number,
+//     required: false,
+//   },
+//   termOfLoan: {
+//     type: Number,
+//     required: true,
+//     trim: true,
+//   },
+//   finalPaymentAmount: {
+//     type: Number,
+//     required: false,
+//   },
+//   dateOfIssuance: {
+//     type: Date,
+//     required: true,
+//   },
+//   dateOfMaturity: {
+//     type: Date,
+//     required: true,
+//   },
+//   numberOfOnTimePayments: {
+//     type: Number,
+//     required: true,
+//   },
+//   dateOfMissedPayment: {
+//     type: Date,
+//     required: false,
+//     default: null, 
+//   },
+//   dateOfPaymentRemedied: {
+//     type: Date,
+//     required: false,
+//     default: null, 
+//   },
+//   supportingDocumentation: {
+//     type: String, 
+//     required: false,
+//   },
+// });
+
+// // Create a model using the schema
+// const Loan = mongoose.model('Loan', loanSchema);
+
+// module.exports = Loan;
