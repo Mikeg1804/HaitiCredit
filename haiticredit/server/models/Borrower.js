@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
+
 
 const borrowerSchema = new Schema({
   firstName: {
@@ -20,8 +21,7 @@ const borrowerSchema = new Schema({
   nif: {
     type: String, // Assuming NIF might include letters and numbers
     required: true,
-    unique: true, // Ensure each
-    PrimaryKey: true,
+    unique: true,
   },
   dateofBirth: {
     type: Date,
@@ -45,12 +45,12 @@ const borrowerSchema = new Schema({
   loans: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Loan",
+      ref: 'Loan',
     },
   ],
 });
 
 // Create a model using the schema
-const Borrower = mongoose.model("Borrower", borrowerSchema);
+const BorrowerModel = mongoose.model('Borrower', borrowerSchema);
 
-module.exports = Borrower;
+module.exports = BorrowerModel;

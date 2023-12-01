@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 const Order = require('./Order');
@@ -7,31 +8,31 @@ const userSchema = new Schema({
   firstName: {
     type: String,
     required: true,
-    trim: true,
+    trim: true
   },
   lastName: {
     type: String,
     required: true,
-    trim: true,
+    trim: true
   },
   email: {
     type: String,
     required: true,
-    unique: true,
-  },
-  telePhone: {
-    type: String, // Use String for phone numbers
-    required: false,
+    unique: true
   },
   password: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 5
   },
   nif: {
     type: String, // Use String for NIF if it may contain letters
     required: true,
-    trim: true,
+    trim: true
+  },
+  telePhone: {
+    type: String, // Use String for phone numbers
+    required: false,
   },
   companyName: {
     type: String,
@@ -52,8 +53,8 @@ const userSchema = new Schema({
   orders: [Order.schema]
 });
 
-// Set up pre-save middleware to create password hash
-userSchema.pre('save', async function (next) {
+// set up pre-save middleware to create password
+userSchema.pre('save', async function(next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
@@ -62,8 +63,8 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Compare the incoming password with the hashed password
-userSchema.methods.isCorrectPassword = async function (password) {
+// compare the incoming password with the hashed password
+userSchema.methods.isCorrectPassword = async function(password) {
   return await bcrypt.compare(password, this.password);
 };
 
