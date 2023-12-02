@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const Borrower = require('./Borrower');
+const User = require('./User');
 
 const loanSchema = new Schema({
   loanName: {
@@ -14,7 +16,7 @@ const loanSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User', 
+    ref: 'User',
     required: true,
   },
   loanAmount: {
@@ -53,15 +55,15 @@ const loanSchema = new Schema({
   dateOfMissedPayment: {
     type: Date,
     required: false,
-    default: null, 
+    default: null,
   },
   dateOfPaymentRemedied: {
     type: Date,
     required: false,
-    default: null, 
+    default: null,
   },
   supportingDocumentation: {
-    type: String, 
+    type: String,
     required: false,
   },
 });

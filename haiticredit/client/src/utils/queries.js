@@ -72,28 +72,20 @@ export const QUERY_USER = gql`
 
 // Query to get a specific borrower by NIF
 export const GET_BORROWER_BY_NIF = gql`
-  query GetBorrowerByNIF($borrowernif: String!) {
-    getBorrower(borrowernif: $borrowernif) {
-      _id
-      firstName
-      lastName
-      email
-      nif
-      dateofBirth
-      telePhone
-      loans {
-        _id
-        loanName
-        user {
-          _id
-          firstName
-          lastName
-        }
-        loanAmount
-        interestRate
-      }
-    }
+query Query($borrowernif: String!) {
+  getBorrower(borrowernif: $borrowernif) {
+    _id
+    firstName
+    lastName
+    email
+    nif
+    dateofBirth
+    addressStreet
+    addressCity
+    addressDepartment
+    telePhone
   }
+}
   `;
 
   export const GET_LOANS = gql`

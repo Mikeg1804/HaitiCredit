@@ -5,6 +5,11 @@ const bcrypt = require('bcrypt');
 const Order = require('./Order');
 
 const userSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    auto: true
+  },
   firstName: {
     type: String,
     required: true,

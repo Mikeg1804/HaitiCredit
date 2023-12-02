@@ -54,10 +54,10 @@ const resolvers = {
         .populate('category')
         .populate({
           path: 'loans',
-          populate: 'user', 
+          populate: 'user',
         });
     },
- 
+
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
@@ -128,19 +128,26 @@ const resolvers = {
 
       return { token, user };
     },
-   
+
     createBorrower: async (parent, args) => {
-    
+
         const borrower = await Borrower.create(args);
         return borrower;
 
     },
 
   createLoan: async (parent, args) => {
-    const loan = await Loan.create(args);
+    const borrower = await Borrower.findOne({ nif: args.borrowernif });
+    const user = await User.findOne({ nif: args.usernif });
+    args.borrower = borrower._id;
+    args.user = user._id;
+    const loan = (await Loan.create(args));
+    loan.populate('borrower');
+    loan.populate('user');
+    loan.save();
     return loan;
-  },  
-  
+  },
+
     addOrder: async (parent, { products }, context) => {
       console.log(context);
       if (context.user) {

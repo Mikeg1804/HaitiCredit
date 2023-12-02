@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { GET_BORROWER_BY_NIF } from '../utils/queries'; 
+import { GET_BORROWER_BY_NIF } from '../utils/queries';
 
 function GetBorrower() {
   const [nif, setNIF] = useState('');
@@ -36,17 +36,21 @@ function GetBorrower() {
           <button type="submit">Get Borrower</button>
         </div>
       </form>
-      
+
       {/* Display loading or error messages */}
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      
+
       {/* Display borrower information */}
-      {data && data.borrower && (
+      {data && data.getBorrower && (
         <div>
           <h3>Borrower Information</h3>
-          <p>NIF: {data.borrower.nif}</p>
-          {/* Add other borrower information here */}
+          <p>NIF: {data.getBorrower.nif}</p>
+          <p>First Name: {data.getBorrower.firstName}</p>
+          <p>Last Name: {data.getBorrower.lastName}</p>
+          <p>Email: {data.getBorrower.email}</p>
+          <p>Address: {data.getBorrower.addressStreet}</p>
+          <p>Phone: {data.getBorrower.telePhone}</p>
         </div>
       )}
     </div>
@@ -54,6 +58,3 @@ function GetBorrower() {
 }
 
 export default GetBorrower;
-
-
-

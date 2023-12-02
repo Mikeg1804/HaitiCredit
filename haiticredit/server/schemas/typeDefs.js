@@ -46,8 +46,10 @@ scalar Number
   type Loan {
     _id: ID
     loanName: String
-    borrowernif: [Borrower] 
-    usernif: [User]
+    borrowernif: String
+    usernif: String
+    borrower: [Borrower]
+    user: [User]
     loanAmount: Number
     interestRate: Number
     loanAmortizationAmount: Number
@@ -91,7 +93,7 @@ scalar Number
   }
 
   type Query {
-    loan: [Loan] 
+    loan: [Loan]
     borrower: [Borrower]
     getBorrower(borrowernif: String!): Borrower
     getLoans(borrowernif: String!): Loan
@@ -106,7 +108,7 @@ scalar Number
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, telePhone: String!, password: String!, nif: String!, companyName: String!, addressStreet: String!, addressCity: String!, addressDepartment:String!): Auth
     createBorrower (firstName: String!, lastName: String!, email: String!, nif: String!, dateofBirth: Date!, addressStreet: String!, addressCity: String!, addressDepartment:String!, telePhone: String!): Borrower
-    createLoan (loanName: String!, loanAmount: Number!, interestRate: Number!,loanAmortizationAmount: Number!, termOfLoan: Number!, finalPaymentAmount: Number!, dateOfIssuance: Date!, dateOfMaturity: Date!, numberOfOnTimePayments: Number!, dateOfMissedPayment: Date!, dateOfPaymentRemedied: Date!, supportingDocumentation: String!, borrowernif:String!, usernif:String!): Loan
+    createLoan (loanName: String!, loanAmount: Number!, interestRate: Number!,loanAmortizationAmount: Number!, termOfLoan: Number!, finalPaymentAmount: Number!, dateOfIssuance: Date!, dateOfMaturity: Date!, numberOfOnTimePayments: Number!, dateOfMissedPayment: Date!, dateOfPaymentRemedied: Date!, supportingDocumentation: String!, borrowernif: String!, usernif: String!): Loan
     addOrder(products: [ID]!): Order
     updateUser(firstName: String, lastName: String, email: String, telePhone: String, password: String, nif: String, companyName: String, addressStreet: String, addressCity: String, addressDepartment:String): User
     updateProduct(_id: ID!, quantity: Int!): Product

@@ -3,6 +3,11 @@ const { Schema } = mongoose;
 
 
 const borrowerSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    auto: true,
+  },
   firstName: {
     type: String,
     required: true,
