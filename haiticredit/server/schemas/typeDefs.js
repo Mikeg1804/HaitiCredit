@@ -48,8 +48,8 @@ scalar Number
     loanName: String
     borrowernif: String
     usernif: String
-    borrower: [Borrower]
-    user: [User]
+    borrower: Borrower
+    user: User
     loanAmount: Number
     interestRate: Number
     loanAmortizationAmount: Number
@@ -96,7 +96,7 @@ scalar Number
     loan: [Loan]
     borrower: [Borrower]
     getBorrower(borrowernif: String!): Borrower
-    getLoans(borrowernif: String!): Loan
+    getLoans(borrowernif: String!): [Loan]
     categories: [Category]
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product

@@ -94,51 +94,30 @@ export const CREATE_BORROWER = gql`
 `;
 
 export const CREATE_LOAN = gql`
-  mutation createLoan(
-    $loanName: String!
-    $loanAmount: Number!
-    $interestRate: Number!
-    $loanAmortizationAmount: Number!
-    $termOfLoan: Number!
-    $finalPaymentAmount: Number!
-    $dateOfIssuance: Date!
-    $dateOfMaturity: Date!
-    $numberOfOnTimePayments: Number!
-    $dateOfMissedPayment: Date!
-    $dateOfPaymentRemedied: Date!
-    $supportingDocumentation: String!
-    $borrowernif: String! 
-    $usernif: String!  
-  ) {
-    createLoan(
-      loanName: $loanName
-      loanAmount: $loanAmount
-      interestRate: $interestRate
-      loanAmortizationAmount: $loanAmortizationAmount
-      termOfLoan: $termOfLoan
-      finalPaymentAmount: $finalPaymentAmount
-      dateOfIssuance: $dateOfIssuance
-      dateOfMaturity: $dateOfMaturity
-      numberOfOnTimePayments: $numberOfOnTimePayments
-      dateOfMissedPayment: $dateOfMissedPayment
-      dateOfPaymentRemedied: $dateOfPaymentRemedied
-      supportingDocumentation: $supportingDocumentation
-      borrowernif: $borrowernif 
-      usernif: $usernif 
-    ) {
-      _id
-      loanName
-      loanAmount
-      borrowernif {
-        _id
-        nif
-        firstName
-        lastName
-      }
-      usernif {
-        _id
-        nif
-      }
+mutation Mutation($loanName: String!, $loanAmount: Number!, $interestRate: Number!, $loanAmortizationAmount: Number!, $termOfLoan: Number!, $finalPaymentAmount: Number!, $dateOfIssuance: Date!, $dateOfMaturity: Date!, $numberOfOnTimePayments: Number!, $dateOfMissedPayment: Date!, $dateOfPaymentRemedied: Date!, $borrowernif: String!, $usernif: String!, $supportingDocumentation: String!) {
+  createLoan(loanName: $loanName, loanAmount: $loanAmount, interestRate: $interestRate, loanAmortizationAmount: $loanAmortizationAmount, termOfLoan: $termOfLoan, finalPaymentAmount: $finalPaymentAmount, dateOfIssuance: $dateOfIssuance, dateOfMaturity: $dateOfMaturity, numberOfOnTimePayments: $numberOfOnTimePayments, dateOfMissedPayment: $dateOfMissedPayment, dateOfPaymentRemedied: $dateOfPaymentRemedied, borrowernif: $borrowernif, usernif: $usernif, supportingDocumentation: $supportingDocumentation) {
+    dateOfIssuance
+    dateOfMaturity
+    dateOfMissedPayment
+    dateOfPaymentRemedied
+    finalPaymentAmount
+    interestRate
+    loanAmortizationAmount
+    loanAmount
+    loanName
+    numberOfOnTimePayments
+    supportingDocumentation
+    termOfLoan
+    borrower {
+      firstName
+      nif
+      addressCity
     }
-  }  
+    user {
+      firstName
+      nif
+      addressCity
+    }
+  }
+}
 `;

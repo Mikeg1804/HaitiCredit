@@ -9,23 +9,15 @@ const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
-    // getLoans: async (parent, { borrowernif }) => {
-    //   try {
-    //     // Check if borrowernif is a valid ObjectId (assuming it's a MongoDB ObjectId)
-    //     if (isValidObjectId(borrowernif)) {
-    //       // If it's a valid ObjectId, use it to find by _id
-    //       const loan = await Loan.findById(borrowernif);
-    //       return loan ? [loan] : [];
-    //     } else {
-    //       // If it's not a valid ObjectId, assume it's a string and find by borrowernif
-    //       const loans = await Loan.find({ borrowernif });
-    //       return loans;
-    //     }
-    //   } catch (error) {
-    //     console.error('Error fetching loans:', error);
-    //     throw error;
-    //   }
-    // },
+    getLoans: async (parent, { borrowernif }) => {
+      try {
+          const loans = await Loan.find({ loanName: borrowernif}).populate('borrower').populate('user');
+          return loans;
+      } catch (error) {
+        console.error('Error fetching loans:', error);
+        throw error;
+      }
+    },
 
     getBorrower: async (parent, { borrowernif }) => {
       return await Borrower.findOne({ nif: borrowernif });
@@ -137,15 +129,17 @@ const resolvers = {
     },
 
   createLoan: async (parent, args) => {
-    const borrower = await Borrower.findOne({ nif: args.borrowernif });
-    const user = await User.findOne({ nif: args.usernif });
+    const borrowernif = args.borrowernif.replace(/[^0-9]/g, "");
+    const usernif = args.usernif.replace(/[^0-9]/g, "");
+
+    const borrower = await Borrower.findOne({ nif: borrowernif });
+    const user = await User.findOne({ nif: usernif });
     args.borrower = borrower._id;
     args.user = user._id;
-    const loan = (await Loan.create(args));
-    loan.populate('borrower');
-    loan.populate('user');
-    loan.save();
-    return loan;
+    const loan = await Loan.create(args);
+    const populateLoan = await loan.populate('borrower');
+    const populateLoan2 = await populateLoan.populate('user');
+    return populateLoan2;
   },
 
     addOrder: async (parent, { products }, context) => {

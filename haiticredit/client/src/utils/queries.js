@@ -89,24 +89,28 @@ query Query($borrowernif: String!) {
   `;
 
   export const GET_LOANS = gql`
-  query getLoans($borrowernif: String!) {
-    getLoans ( borrowernif: $borrowernif) {
-      _id
-      loanName
-      borrowernif {
-        nif
-        firstName
-        lastName
-      }
-      usernif {
-        nif
-        firstName
-        lastName
-      }
-      loanAmount
-      interestRate
+  query Query($borrowernif: String!) {
+    getLoans(borrowernif: $borrowernif) {
       dateOfIssuance
       dateOfMaturity
+      dateOfMissedPayment
+      finalPaymentAmount
+      dateOfPaymentRemedied
+      interestRate
+      loanAmortizationAmount
+      loanAmount
+      loanName
+      numberOfOnTimePayments
+      supportingDocumentation
+      termOfLoan
+      borrower {
+        firstName
+        nif
+      }
+      user {
+        firstName
+        nif
+      }
     }
   }
 `;

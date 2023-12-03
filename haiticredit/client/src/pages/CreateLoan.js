@@ -2,7 +2,7 @@
   import { Link } from 'react-router-dom';
   import { useMutation } from '@apollo/client';
   import { CREATE_LOAN } from '../utils/mutations';
- 
+
 
 
   function CreateLoan() {
@@ -21,7 +21,7 @@
       dateOfMissedPayment: '',
       dateOfPaymentRemedied: '',
       supportingDocumentation: '',
-      borrowernif: '', 
+      borrowernif: '',
       usernif: '',
     });
 
@@ -32,7 +32,7 @@
     const handleFormSubmit = async (event) => {
       event.preventDefault();
 
-   
+
 
       const mutationResponse = await createLoan({
         variables: {
@@ -50,7 +50,7 @@
           supportingDocumentation: formState.supportingDocumentation,
           borrowernif: formState.borrowernif,
           usernif: formState.usernif,
-          
+
         },
       });
 
@@ -73,13 +73,13 @@
       // const selectedFile = event.target.files[0];
       setFile(selectedFile);
     };
-    
+
     return (
       <div className="container my-1">
         <Link to="/createloan">← Go back</Link>
         <h2>Create New Loan</h2>
         <form onSubmit={handleFormSubmit}>
-     
+
           <div className="flex-row space-between my-2">
             <label htmlFor="loanName">Loan Name:</label>
             <input
@@ -104,7 +104,7 @@
               name="interestRate"
               value={formState.interestRate}
               onChange={handleChange}
-            />  
+            />
             <label htmlFor="loanAmortizationAmount">Loan Amortization Amount:</label>
             <input
               type="loanAmortizationAmount"
@@ -112,7 +112,7 @@
               name="loanAmortizationAmount"
               value={formState.loanAmortizationAmount}
               onChange={handleChange}
-            />   
+            />
             <label htmlFor="termOfLoan">Term of Loan:</label>
             <input
               type="termOfLoan"
@@ -120,8 +120,8 @@
               name="termOfLoan"
               value={formState.termOfLoan}
               onChange={handleChange}
-            /> 
-     
+            />
+
             <label htmlFor="finalPaymentAmount">FinalPayment Amount:</label>
             <input
               type="finalPaymentAmount"
@@ -129,7 +129,7 @@
               name="finalPaymentAmount"
               value={formState.finalPaymentAmount}
               onChange={handleChange}
-            />  
+            />
             <label htmlFor="dateOfIssuance">Date of Issuance:</label>
             <input
               type="date"
@@ -145,7 +145,7 @@
               name="dateOfMaturity"
               value={formState.dateOfMaturity}
               onChange={handleChange}
-            /> 
+            />
             <label htmlFor="numberOfOnTimePayments">Number of Ontime Payments:</label>
             <input
               type="number"
@@ -153,7 +153,7 @@
               name="numberOfOnTimePayments"
               value={formState.numberOfOnTimePayments}
               onChange={handleChange}
-            /> 
+            />
             <label htmlFor="dateOfMissedPayment">Last Date of Missed Payment:</label>
             <input
               type="date"
@@ -161,7 +161,7 @@
               name="dateOfMissedPayment"
               value={formState.dateOfMissedPayment}
               onChange={handleChange}
-            /> 
+            />
             <label htmlFor="dateOfPaymentRemedied">Date Missed Payment was Remedied:</label>
             <input
               type="date"
@@ -169,14 +169,14 @@
               name="dateOfPaymentRemedied"
               value={formState.dateOfPaymentRemedied}
               onChange={handleChange}
-            /> 
+            />
           <label htmlFor="supportingDocumentation">Supporting Documentation:</label>
           <input
               type="file"
               id="supportingDocumentation"
               name="supportingDocumentation"
               onChange={handleFileChange}
-            />                                                             
+            />
           </div>
           <div className="flex-row space-between my-2">
           <label htmlFor="usernif">Lender NIF:</label>
