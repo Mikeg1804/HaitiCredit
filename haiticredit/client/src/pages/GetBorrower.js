@@ -5,7 +5,7 @@ import { GET_BORROWER_BY_NIF } from '../utils/queries';
 function GetBorrower() {
   const [nif, setNIF] = useState('');
   const [getBorrower, { loading, error, data }] = useLazyQuery(GET_BORROWER_BY_NIF);
-
+  console.log(data);
   const handleFormSubmit = (event) => {
     event.preventDefault();
     // Call the query with the entered NIF
